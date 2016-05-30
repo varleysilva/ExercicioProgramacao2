@@ -1,6 +1,9 @@
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -49,7 +52,6 @@ public class mainForm extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         AplicarEfeitoJPanel = new javax.swing.JPanel();
         SelecionarImagemjPanel = new javax.swing.JPanel();
-        jFileChooser1 = new javax.swing.JFileChooser();
         ConcluirJPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -114,38 +116,26 @@ public class mainForm extends javax.swing.JFrame {
         AplicarEfeitoJPanel.setLayout(AplicarEfeitoJPanelLayout);
         AplicarEfeitoJPanelLayout.setHorizontalGroup(
             AplicarEfeitoJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGap(0, 521, Short.MAX_VALUE)
         );
         AplicarEfeitoJPanelLayout.setVerticalGroup(
             AplicarEfeitoJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 357, Short.MAX_VALUE)
         );
 
         jPanel3.add(AplicarEfeitoJPanel, "card2");
 
         SelecionarImagemjPanel.setBackground(new java.awt.Color(204, 0, 0));
 
-        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooser1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout SelecionarImagemjPanelLayout = new javax.swing.GroupLayout(SelecionarImagemjPanel);
         SelecionarImagemjPanel.setLayout(SelecionarImagemjPanelLayout);
         SelecionarImagemjPanelLayout.setHorizontalGroup(
             SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SelecionarImagemjPanelLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+            .addGap(0, 521, Short.MAX_VALUE)
         );
         SelecionarImagemjPanelLayout.setVerticalGroup(
             SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SelecionarImagemjPanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+            .addGap(0, 357, Short.MAX_VALUE)
         );
 
         jPanel3.add(SelecionarImagemjPanel, "card2");
@@ -156,11 +146,11 @@ public class mainForm extends javax.swing.JFrame {
         ConcluirJPanel.setLayout(ConcluirJPanelLayout);
         ConcluirJPanelLayout.setHorizontalGroup(
             ConcluirJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGap(0, 521, Short.MAX_VALUE)
         );
         ConcluirJPanelLayout.setVerticalGroup(
             ConcluirJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 357, Short.MAX_VALUE)
         );
 
         jPanel3.add(ConcluirJPanel, "card2");
@@ -209,6 +199,12 @@ public class mainForm extends javax.swing.JFrame {
             jPanel3.add(SelecionarImagemjPanel);
             jPanel3.repaint();
             jPanel3.revalidate();
+            
+        try {
+            new FileChooser().buscar();
+        } catch (IOException ex) {
+            Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_SelecionarImagemJButtonActionPerformed
 
     private void ConcluirJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConcluirJButtonActionPerformed
@@ -224,10 +220,6 @@ public class mainForm extends javax.swing.JFrame {
             jPanel3.repaint();
             jPanel3.revalidate();
     }//GEN-LAST:event_ConcluirJButtonActionPerformed
-
-    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,7 +263,6 @@ public class mainForm extends javax.swing.JFrame {
     private javax.swing.JButton EfeitoJButton;
     private javax.swing.JButton SelecionarImagemJButton;
     private javax.swing.JPanel SelecionarImagemjPanel;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
