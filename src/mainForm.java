@@ -1,3 +1,7 @@
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,7 +18,18 @@ public class mainForm extends javax.swing.JFrame {
      * Creates new form mainForm
      */
     public mainForm() {
+        
         initComponents();
+        
+        //centralizando a tela
+        Toolkit tool = Toolkit.getDefaultToolkit();
+        Dimension dim = new Dimension(tool.getScreenSize());
+        int height = (int) dim.getHeight();
+        int width = (int) dim.getWidth();
+        setSize(width, height);
+        setLocation(width / 2 - getWidth() / 2, height / 2 - getHeight() / 2);
+        
+ 
     }
 
     /**
@@ -28,13 +43,14 @@ public class mainForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        EfeitoJButton = new javax.swing.JButton();
+        SelecionarImagemJButton = new javax.swing.JButton();
+        ConcluirJButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
+        AplicarEfeitoJPanel = new javax.swing.JPanel();
+        SelecionarImagemjPanel = new javax.swing.JPanel();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        ConcluirJPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -44,93 +60,110 @@ public class mainForm extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("Avançar");
+        EfeitoJButton.setText("Aplicar Efeitos");
+        EfeitoJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EfeitoJButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Voltar");
+        SelecionarImagemJButton.setText("Selecionar Imagem");
+        SelecionarImagemJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelecionarImagemJButtonActionPerformed(evt);
+            }
+        });
+
+        ConcluirJButton.setText("Concluir");
+        ConcluirJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConcluirJButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(22, 22, 22))
+                .addGap(14, 14, 14)
+                .addComponent(SelecionarImagemJButton)
+                .addGap(26, 26, 26)
+                .addComponent(EfeitoJButton)
+                .addGap(26, 26, 26)
+                .addComponent(ConcluirJButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(EfeitoJButton)
+                    .addComponent(SelecionarImagemJButton)
+                    .addComponent(ConcluirJButton))
                 .addGap(17, 17, 17))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new java.awt.CardLayout());
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 51));
+        AplicarEfeitoJPanel.setBackground(new java.awt.Color(255, 255, 51));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
+        javax.swing.GroupLayout AplicarEfeitoJPanelLayout = new javax.swing.GroupLayout(AplicarEfeitoJPanel);
+        AplicarEfeitoJPanel.setLayout(AplicarEfeitoJPanelLayout);
+        AplicarEfeitoJPanelLayout.setHorizontalGroup(
+            AplicarEfeitoJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 562, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
-        );
-
-        jPanel3.add(jPanel4, "card2");
-
-        jPanel6.setBackground(new java.awt.Color(0, 51, 204));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
+        AplicarEfeitoJPanelLayout.setVerticalGroup(
+            AplicarEfeitoJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
-        jPanel3.add(jPanel6, "card2");
+        jPanel3.add(AplicarEfeitoJPanel, "card2");
 
-        jPanel5.setBackground(new java.awt.Color(0, 153, 153));
+        SelecionarImagemjPanel.setBackground(new java.awt.Color(204, 0, 0));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
+        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SelecionarImagemjPanelLayout = new javax.swing.GroupLayout(SelecionarImagemjPanel);
+        SelecionarImagemjPanel.setLayout(SelecionarImagemjPanelLayout);
+        SelecionarImagemjPanelLayout.setHorizontalGroup(
+            SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SelecionarImagemjPanelLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
-        );
-
-        jPanel3.add(jPanel5, "card2");
-
-        jPanel7.setBackground(new java.awt.Color(0, 204, 51));
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
+        SelecionarImagemjPanelLayout.setVerticalGroup(
+            SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SelecionarImagemjPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        jPanel3.add(jPanel7, "card2");
+        jPanel3.add(SelecionarImagemjPanel, "card2");
+
+        ConcluirJPanel.setBackground(new java.awt.Color(0, 204, 51));
+
+        javax.swing.GroupLayout ConcluirJPanelLayout = new javax.swing.GroupLayout(ConcluirJPanel);
+        ConcluirJPanel.setLayout(ConcluirJPanelLayout);
+        ConcluirJPanelLayout.setHorizontalGroup(
+            ConcluirJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 562, Short.MAX_VALUE)
+        );
+        ConcluirJPanelLayout.setVerticalGroup(
+            ConcluirJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(ConcluirJPanel, "card2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -147,19 +180,54 @@ public class mainForm extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void EfeitoJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EfeitoJButtonActionPerformed
+        // TODO add your handling code here:
+            //removing panel
+            jPanel3.removeAll();
+            jPanel3.repaint();
+            jPanel3.revalidate();
+            
+            //adding panels
+            jPanel3.add(AplicarEfeitoJPanel);
+            jPanel3.repaint();
+            jPanel3.revalidate();
+    }//GEN-LAST:event_EfeitoJButtonActionPerformed
+
+    private void SelecionarImagemJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarImagemJButtonActionPerformed
+        // TODO add your handling code here:
+        //removing panel
+            jPanel3.removeAll();
+            jPanel3.repaint();
+            jPanel3.revalidate();
+            
+            //adding panels
+            jPanel3.add(SelecionarImagemjPanel);
+            jPanel3.repaint();
+            jPanel3.revalidate();
+    }//GEN-LAST:event_SelecionarImagemJButtonActionPerformed
+
+    private void ConcluirJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConcluirJButtonActionPerformed
+        // TODO add your handling code here:
+        
+         //removing panel
+            jPanel3.removeAll();
+            jPanel3.repaint();
+            jPanel3.revalidate();
+            
+            //adding panels
+            jPanel3.add(ConcluirJPanel);
+            jPanel3.repaint();
+            jPanel3.revalidate();
+    }//GEN-LAST:event_ConcluirJButtonActionPerformed
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,14 +265,15 @@ public class mainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JPanel AplicarEfeitoJPanel;
+    private javax.swing.JButton ConcluirJButton;
+    private javax.swing.JPanel ConcluirJPanel;
+    private javax.swing.JButton EfeitoJButton;
+    private javax.swing.JButton SelecionarImagemJButton;
+    private javax.swing.JPanel SelecionarImagemjPanel;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     // End of variables declaration//GEN-END:variables
 }
