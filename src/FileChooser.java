@@ -8,6 +8,7 @@
  *
  * @author varleysilva
  */
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,8 +18,10 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileChooser {
+        
     
     public void buscar() throws FileNotFoundException, IOException{
+        
         //implementa os tipos de arquivos que apareceram para escolha
         FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("ppm", "pgm", "PPM", "PGM");
 
