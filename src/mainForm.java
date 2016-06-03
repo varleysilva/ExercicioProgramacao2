@@ -1,9 +1,12 @@
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,10 +20,13 @@ import java.util.logging.Logger;
  */
 public class mainForm extends javax.swing.JFrame {
 
+    private String file;
+
     /**
      * Creates new form mainForm
      */
-    public mainForm() {
+    public mainForm(){
+        
         
         initComponents();
         int width = 600;
@@ -50,14 +56,16 @@ public class mainForm extends javax.swing.JFrame {
         SelecionarImagemJButton = new javax.swing.JButton();
         ConcluirJButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        SelecionarImagemjPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         AplicarEfeitoJPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        SelecionarImagemjPanel = new javax.swing.JPanel();
         ConcluirJPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -116,20 +124,56 @@ public class mainForm extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new java.awt.CardLayout());
 
+        SelecionarImagemjPanel.setBackground(new java.awt.Color(204, 0, 0));
+
+        jLabel2.setText("jLabel2");
+
+        javax.swing.GroupLayout SelecionarImagemjPanelLayout = new javax.swing.GroupLayout(SelecionarImagemjPanel);
+        SelecionarImagemjPanel.setLayout(SelecionarImagemjPanelLayout);
+        SelecionarImagemjPanelLayout.setHorizontalGroup(
+            SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SelecionarImagemjPanelLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
+        );
+        SelecionarImagemjPanelLayout.setVerticalGroup(
+            SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SelecionarImagemjPanelLayout.createSequentialGroup()
+                .addContainerGap(298, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+
+        jPanel3.add(SelecionarImagemjPanel, "card2");
+
         AplicarEfeitoJPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Imagens PGM"));
 
+        jButton4.setText("TESTE");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 251, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jButton4)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jButton4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -196,21 +240,6 @@ public class mainForm extends javax.swing.JFrame {
 
         jPanel3.add(AplicarEfeitoJPanel, "card2");
 
-        SelecionarImagemjPanel.setBackground(new java.awt.Color(204, 0, 0));
-
-        javax.swing.GroupLayout SelecionarImagemjPanelLayout = new javax.swing.GroupLayout(SelecionarImagemjPanel);
-        SelecionarImagemjPanel.setLayout(SelecionarImagemjPanelLayout);
-        SelecionarImagemjPanelLayout.setHorizontalGroup(
-            SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
-        );
-        SelecionarImagemjPanelLayout.setVerticalGroup(
-            SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
-        );
-
-        jPanel3.add(SelecionarImagemjPanel, "card2");
-
         ConcluirJPanel.setBackground(new java.awt.Color(0, 204, 51));
 
         javax.swing.GroupLayout ConcluirJPanelLayout = new javax.swing.GroupLayout(ConcluirJPanel);
@@ -271,11 +300,20 @@ public class mainForm extends javax.swing.JFrame {
             jPanel3.repaint();
             jPanel3.revalidate();
             
-        try {
-            new FileChooser().buscar();
-        } catch (IOException ex) {
-            Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          JOptionPane.showMessageDialog(null, "Por favor, selecione uma imagem (PPM OU PGM PORRA! ");        
+            JFileChooser input = new JFileChooser();
+            int a = input.showOpenDialog(null);
+            //String file = "";
+
+            if (a == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = input.getSelectedFile();
+                  file = selectedFile.getPath();
+                  System.out.println(file);
+                  
+                }
+            System.out.println(file);
+            
+            
     }//GEN-LAST:event_SelecionarImagemJButtonActionPerformed
 
     private void ConcluirJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConcluirJButtonActionPerformed
@@ -291,6 +329,11 @@ public class mainForm extends javax.swing.JFrame {
             jPanel3.repaint();
             jPanel3.revalidate();
     }//GEN-LAST:event_ConcluirJButtonActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+      //DecifraPGM.le_linha(file);
+      
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -337,7 +380,9 @@ public class mainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
