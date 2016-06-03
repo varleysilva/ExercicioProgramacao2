@@ -1,10 +1,14 @@
 
+import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,16 +34,19 @@ abstract class DecifraPGM {
 		System.out.println("Linha: " + linha);
 		return linha;
 	}
-   public static double Decode(String file) throws FileNotFoundException{
+   public static void Decode(String file_diretorio) throws FileNotFoundException{
+//       String diretorio = file_diretorio = file_diretorio.substring(1);
+       System.out.print("FALA NOIS NO DECODE");
        try {
-			FileInputStream arquivo = new FileInputStream(file);
+			FileInputStream arquivo = new FileInputStream(file_diretorio);
 			BufferedImage imagem_pgm = null, imagem_pgm_negativo = null;
+                        System.out.println(file_diretorio  + "diretorio");
 		    int width = 0;
 		    int height = 0;
 		    int maxVal = 0;
 			int count = 0;
 			byte bb;
-			
+		
 			String linha = PGMreader.le_linha(arquivo);
 			if("P5".equals(linha)) {
 				linha = PGMreader.le_linha(arquivo);
@@ -81,13 +88,19 @@ abstract class DecifraPGM {
 			System.out.println("Width=" + width);
 			System.out.println("Total de Pixels = " + (width * height));
 			System.out.println("Total de Pixels lidos = " + count);
+                        JFrame frame = new JFrame();
+			frame.getContentPane().setLayout(new FlowLayout());
+			frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm)));
+			frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm_negativo)));
+			frame.pack();
+			frame.setVisible(true);
                         arquivo.close();
    }
                     catch(Throwable t) {
 			t.printStackTrace(System.err) ;
-			return 0;
+			return;
 		}
-       return 0;
+       //return 0;
 }
 }
 

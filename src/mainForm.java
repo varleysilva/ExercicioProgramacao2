@@ -2,6 +2,8 @@
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +22,8 @@ import javax.swing.JOptionPane;
  */
 public class mainForm extends javax.swing.JFrame {
 
-    private String file;
+    private String file_diretorio = "";
+    FileInputStream arquivo;
 
     /**
      * Creates new form mainForm
@@ -307,11 +310,11 @@ public class mainForm extends javax.swing.JFrame {
 
             if (a == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = input.getSelectedFile();
-                  file = selectedFile.getPath();
-                  System.out.println(file);
+                  file_diretorio = selectedFile.getPath();
+                  System.out.println(file_diretorio);
                   
                 }
-            System.out.println(file);
+            
             
             
     }//GEN-LAST:event_SelecionarImagemJButtonActionPerformed
@@ -331,7 +334,13 @@ public class mainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_ConcluirJButtonActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-      //DecifraPGM.le_linha(file);
+      //DecifraPGM.le_linha(arquivo);
+        try {
+            System.out.println(file_diretorio);
+            DecifraPGM.Decode(file_diretorio);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
       
     }//GEN-LAST:event_jButton4ActionPerformed
 
