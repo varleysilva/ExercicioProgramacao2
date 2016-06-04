@@ -34,7 +34,7 @@ abstract class DecifraPGM {
 		System.out.println("Linha: " + linha);
 		return linha;
 	}
-   public static void Decode(String file_diretorio) throws FileNotFoundException{
+   public static void decodeNegativo(String file_diretorio) throws FileNotFoundException{
 //       String diretorio = file_diretorio = file_diretorio.substring(1);
        System.out.print("FALA NOIS NO DECODE");
        try {

@@ -337,7 +337,7 @@ public class mainForm extends javax.swing.JFrame {
       //DecifraPGM.le_linha(arquivo);
         try {
             System.out.println(file_diretorio);
-            DecifraPGM.Decode(file_diretorio);
+            DecifraPGM.decodeNegativo(file_diretorio);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
