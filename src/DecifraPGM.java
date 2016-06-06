@@ -1,7 +1,5 @@
 
-import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,7 +8,6 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 /*

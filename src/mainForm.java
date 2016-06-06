@@ -23,6 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class mainForm extends javax.swing.JFrame {
     private DecifraPPM imagem;
+    String extensao;
     private String file_diretorio = "";
     FileInputStream arquivo;
 
@@ -65,7 +66,7 @@ public class mainForm extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         NegativojButton = new javax.swing.JButton();
         SharpenjButton = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        SmoothjButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -138,10 +139,10 @@ public class mainForm extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("jButton4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        SmoothjButton.setText("Smooth");
+        SmoothjButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                SmoothjButtonActionPerformed(evt);
             }
         });
 
@@ -152,7 +153,7 @@ public class mainForm extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4)
+                    .addComponent(SmoothjButton)
                     .addComponent(SharpenjButton)
                     .addComponent(NegativojButton))
                 .addContainerGap(90, Short.MAX_VALUE))
@@ -165,7 +166,7 @@ public class mainForm extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addComponent(SharpenjButton)
                 .addGap(52, 52, 52)
-                .addComponent(jButton4)
+                .addComponent(SmoothjButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -282,18 +283,16 @@ public class mainForm extends javax.swing.JFrame {
         
     
     private void SelecionarImagemJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarImagemJButtonActionPerformed
-        
+            jPanel3.removeAll();
+            jPanel3.repaint();
+            jPanel3.revalidate();
+            
+            //adding panels
+            jPanel3.add(AplicarEfeitoJPanel);
+            jPanel3.repaint();
+            jPanel3.revalidate();
 
-// TODO add your handling code here:
-        //removing panel
-//            jPanel3.removeAll();
-//            jPanel3.repaint();
-//            jPanel3.revalidate();
-//            
-//            //adding panels
-//            
-//            jPanel3.repaint();
-//            jPanel3.revalidate();
+//
             
           JOptionPane.showMessageDialog(null, "Por favor, selecione uma imagem (PPM OU PGM PORRA!) ");        
             JFileChooser input = new JFileChooser();
@@ -303,22 +302,13 @@ public class mainForm extends javax.swing.JFrame {
             if (a == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = input.getSelectedFile();
                   file_diretorio = selectedFile.getPath();
-                  System.out.println(file_diretorio);
-                  
-                  String extensao;
-        extensao = file_diretorio.substring(file_diretorio.lastIndexOf("."), file_diretorio.length());
-         
-
-        if(extensao == ".pgm"){
-        AplicarEfeitoJPanel.removeAll();
-        AplicarEfeitoJPanel.repaint();
-        AplicarEfeitoJPanel.revalidate();
+          
+        }
             
-            //adding panels
-        AplicarEfeitoJPanel.add(jPanel5);
-        AplicarEfeitoJPanel.repaint();
-        AplicarEfeitoJPanel.revalidate();
-        } else{
+             extensao = file_diretorio.substring(file_diretorio.lastIndexOf("."), file_diretorio.length());
+         
+                    
+        if(extensao == ".pgm"){
         AplicarEfeitoJPanel.removeAll();
         AplicarEfeitoJPanel.repaint();
         AplicarEfeitoJPanel.revalidate();
@@ -327,9 +317,17 @@ public class mainForm extends javax.swing.JFrame {
         AplicarEfeitoJPanel.add(jPanel4);
         AplicarEfeitoJPanel.repaint();
         AplicarEfeitoJPanel.revalidate();
-        }
+        } else {
+        AplicarEfeitoJPanel.removeAll();
+        AplicarEfeitoJPanel.repaint();
+        AplicarEfeitoJPanel.revalidate();
+            
+            //adding panels
+        AplicarEfeitoJPanel.add(jPanel5);
+        AplicarEfeitoJPanel.repaint();
+        AplicarEfeitoJPanel.revalidate();
                
-                }
+   }
             
             
             
@@ -354,7 +352,6 @@ public class mainForm extends javax.swing.JFrame {
     private void NegativojButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NegativojButtonActionPerformed
       //DecifraPGM.le_linha(arquivo);
         try {
-            System.out.println(file_diretorio);
             DecifraPGM.decodeNegativo(file_diretorio);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -391,14 +388,14 @@ public class mainForm extends javax.swing.JFrame {
         imagem.applyFilterRGB(2);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void SmoothjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SmoothjButtonActionPerformed
         try {
             // TODO add your handling code here:
             DecifraPGM.decodeSmooth(file_diretorio);
         } catch (IOException ex) {
             Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_SmoothjButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -442,10 +439,10 @@ public class mainForm extends javax.swing.JFrame {
     private javax.swing.JButton NegativojButton;
     private javax.swing.JButton SelecionarImagemJButton;
     private javax.swing.JButton SharpenjButton;
+    private javax.swing.JButton SmoothjButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

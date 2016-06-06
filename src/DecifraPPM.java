@@ -20,7 +20,7 @@ public class DecifraPPM extends Picture {
     private int[][][] pixels;
 
     DecifraPPM(String path) {
-        System.out.println("PORTO CUZAO STRING ");
+        
         this.mountImage(path);
     }
 
@@ -78,13 +78,10 @@ public class DecifraPPM extends Picture {
         for (y = 0; y < this.getHeight(); y++) {
             for (x = 0; x < this.getWidth(); x++) {
                 int[] rgb = new int[3];
-                System.arraycopy(this.pixels[y][x], 0, rgb, 0, rgb.length);  // copy pixel
-                rgb[color] = 0; // apply filter
-                Color pixel = new Color(rgb[0], rgb[1], rgb[2]);
-                this.getPicture().setRGB(x, y, pixel.getRGB());
-                
-               
+                rgb[color] = this.pixels[y][x][color];
+                this.getPicture().setRGB(x, y, new Color(rgb[0], rgb[1], rgb[2]).getRGB());
             }
         }
     }
+    
 }
