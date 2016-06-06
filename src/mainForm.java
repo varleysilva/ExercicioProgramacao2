@@ -4,11 +4,11 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * @author varleysilva
  */
 public class mainForm extends javax.swing.JFrame {
-
+    private DecifraPPM imagem;
     private String file_diretorio = "";
     FileInputStream arquivo;
 
@@ -41,6 +41,8 @@ public class mainForm extends javax.swing.JFrame {
         setSize(width, height);
         setLocation(width / 2 - getWidth() / 2, height / 2 - getHeight() / 2);
         
+        
+        
  
     }
 
@@ -55,15 +57,13 @@ public class mainForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        EfeitoJButton = new javax.swing.JButton();
         SelecionarImagemJButton = new javax.swing.JButton();
         ConcluirJButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        SelecionarImagemjPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         AplicarEfeitoJPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
+        NegativojButton = new javax.swing.JButton();
+        SharpenjButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -78,13 +78,6 @@ public class mainForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        EfeitoJButton.setText("Aplicar Efeitos");
-        EfeitoJButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EfeitoJButtonActionPerformed(evt);
-            }
-        });
 
         SelecionarImagemJButton.setText("Selecionar Imagem");
         SelecionarImagemJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -105,12 +98,10 @@ public class mainForm extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(126, 126, 126)
                 .addComponent(SelecionarImagemJButton)
-                .addGap(26, 26, 26)
-                .addComponent(EfeitoJButton)
-                .addGap(26, 26, 26)
-                .addComponent(ConcluirJButton)
+                .addGap(34, 34, 34)
+                .addComponent(ConcluirJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -118,7 +109,6 @@ public class mainForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EfeitoJButton)
                     .addComponent(SelecionarImagemJButton)
                     .addComponent(ConcluirJButton))
                 .addGap(17, 17, 17))
@@ -127,38 +117,22 @@ public class mainForm extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new java.awt.CardLayout());
 
-        SelecionarImagemjPanel.setBackground(new java.awt.Color(204, 0, 0));
-
-        jLabel2.setText("jLabel2");
-
-        javax.swing.GroupLayout SelecionarImagemjPanelLayout = new javax.swing.GroupLayout(SelecionarImagemjPanel);
-        SelecionarImagemjPanel.setLayout(SelecionarImagemjPanelLayout);
-        SelecionarImagemjPanelLayout.setHorizontalGroup(
-            SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SelecionarImagemjPanelLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
-        );
-        SelecionarImagemjPanelLayout.setVerticalGroup(
-            SelecionarImagemjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SelecionarImagemjPanelLayout.createSequentialGroup()
-                .addContainerGap(298, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
-
-        jPanel3.add(SelecionarImagemjPanel, "card2");
-
         AplicarEfeitoJPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Imagens PGM"));
 
-        jButton4.setText("TESTE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        NegativojButton.setText("Negativo");
+        NegativojButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                NegativojButtonActionPerformed(evt);
+            }
+        });
+
+        SharpenjButton.setText("Sharpen");
+        SharpenjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SharpenjButtonActionPerformed(evt);
             }
         });
 
@@ -167,15 +141,19 @@ public class mainForm extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jButton4)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addGap(73, 73, 73)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SharpenjButton)
+                    .addComponent(NegativojButton))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jButton4)
+                .addComponent(NegativojButton)
+                .addGap(47, 47, 47)
+                .addComponent(SharpenjButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -183,10 +161,25 @@ public class mainForm extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Imagens PPM"));
 
         jButton1.setText("R");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("B");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("G");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Filtro RGB");
 
@@ -205,7 +198,7 @@ public class mainForm extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 62, Short.MAX_VALUE))
+                .addGap(0, 83, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,17 +221,14 @@ public class mainForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AplicarEfeitoJPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         AplicarEfeitoJPanelLayout.setVerticalGroup(
             AplicarEfeitoJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AplicarEfeitoJPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel3.add(AplicarEfeitoJPanel, "card2");
@@ -249,7 +239,7 @@ public class mainForm extends javax.swing.JFrame {
         ConcluirJPanel.setLayout(ConcluirJPanelLayout);
         ConcluirJPanelLayout.setHorizontalGroup(
             ConcluirJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
+            .addGap(0, 1130, Short.MAX_VALUE)
         );
         ConcluirJPanelLayout.setVerticalGroup(
             ConcluirJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,43 +267,59 @@ public class mainForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void EfeitoJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EfeitoJButtonActionPerformed
-        // TODO add your handling code here:
-            //removing panel
-            jPanel3.removeAll();
-            jPanel3.repaint();
-            jPanel3.revalidate();
-            
-            //adding panels
-            jPanel3.add(AplicarEfeitoJPanel);
-            jPanel3.repaint();
-            jPanel3.revalidate();
-    }//GEN-LAST:event_EfeitoJButtonActionPerformed
-
+        
+    
     private void SelecionarImagemJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarImagemJButtonActionPerformed
-        // TODO add your handling code here:
+        
+
+// TODO add your handling code here:
         //removing panel
-            jPanel3.removeAll();
-            jPanel3.repaint();
-            jPanel3.revalidate();
+//            jPanel3.removeAll();
+//            jPanel3.repaint();
+//            jPanel3.revalidate();
+//            
+//            //adding panels
+//            
+//            jPanel3.repaint();
+//            jPanel3.revalidate();
             
-            //adding panels
-            jPanel3.add(SelecionarImagemjPanel);
-            jPanel3.repaint();
-            jPanel3.revalidate();
-            
-          JOptionPane.showMessageDialog(null, "Por favor, selecione uma imagem (PPM OU PGM PORRA! ");        
+          JOptionPane.showMessageDialog(null, "Por favor, selecione uma imagem (PPM OU PGM PORRA!) ");        
             JFileChooser input = new JFileChooser();
+            input.setFileFilter(new FileNameExtensionFilter("pgm, ppm","pgm", "ppm"));
             int a = input.showOpenDialog(null);
-            //String file = "";
 
             if (a == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = input.getSelectedFile();
                   file_diretorio = selectedFile.getPath();
                   System.out.println(file_diretorio);
                   
+                  String extensao;
+        extensao = file_diretorio.substring(file_diretorio.lastIndexOf("."), file_diretorio.length());
+         
+
+        if(extensao == ".pgm"){
+        AplicarEfeitoJPanel.removeAll();
+        AplicarEfeitoJPanel.repaint();
+        AplicarEfeitoJPanel.revalidate();
+            
+            //adding panels
+        AplicarEfeitoJPanel.add(jPanel5);
+        AplicarEfeitoJPanel.repaint();
+        AplicarEfeitoJPanel.revalidate();
+        } else{
+        AplicarEfeitoJPanel.removeAll();
+        AplicarEfeitoJPanel.repaint();
+        AplicarEfeitoJPanel.revalidate();
+            
+            //adding panels
+        AplicarEfeitoJPanel.add(jPanel4);
+        AplicarEfeitoJPanel.repaint();
+        AplicarEfeitoJPanel.revalidate();
+        }
+               
                 }
+            
+            
             
             
             
@@ -333,7 +339,7 @@ public class mainForm extends javax.swing.JFrame {
             jPanel3.revalidate();
     }//GEN-LAST:event_ConcluirJButtonActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void NegativojButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NegativojButtonActionPerformed
       //DecifraPGM.le_linha(arquivo);
         try {
             System.out.println(file_diretorio);
@@ -342,7 +348,34 @@ public class mainForm extends javax.swing.JFrame {
             Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
       
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_NegativojButtonActionPerformed
+
+    private void SharpenjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharpenjButtonActionPerformed
+        try {
+            DecifraPGM.decodeSharpen(file_diretorio);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_SharpenjButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        imagem = new DecifraPPM(file_diretorio);
+        imagem.applyFilterRGB(0);
+     
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        imagem = new DecifraPPM(file_diretorio);
+        imagem.applyFilterRGB(1);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        imagem = new DecifraPPM(file_diretorio);
+        imagem.applyFilterRGB(2);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -383,15 +416,13 @@ public class mainForm extends javax.swing.JFrame {
     private javax.swing.JPanel AplicarEfeitoJPanel;
     private javax.swing.JButton ConcluirJButton;
     private javax.swing.JPanel ConcluirJPanel;
-    private javax.swing.JButton EfeitoJButton;
+    private javax.swing.JButton NegativojButton;
     private javax.swing.JButton SelecionarImagemJButton;
-    private javax.swing.JPanel SelecionarImagemjPanel;
+    private javax.swing.JButton SharpenjButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
