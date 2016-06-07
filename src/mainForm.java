@@ -328,7 +328,7 @@ public class mainForm extends javax.swing.JFrame {
 
 //
             
-          JOptionPane.showMessageDialog(null, "Por favor, selecione uma imagem (PPM OU PGM PORRA!) ");        
+          JOptionPane.showMessageDialog(null, "Por favor, selecione uma imagem (PPM OU PGM) ");        
             JFileChooser input = new JFileChooser();
             input.setFileFilter(new FileNameExtensionFilter("pgm, ppm","pgm", "ppm"));
             int a = input.showOpenDialog(null);
@@ -395,8 +395,6 @@ public class mainForm extends javax.swing.JFrame {
     private void SharpenjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharpenjButtonActionPerformed
         try {
             DecifraPGM.decodeSharpen(file_diretorio);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -404,7 +402,7 @@ public class mainForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         imagem = new DecifraPPM(file_diretorio);
-        imagem.applyFilterRGB(0);
+        imagem.decodeRGB(0);
      
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -412,13 +410,13 @@ public class mainForm extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         imagem = new DecifraPPM(file_diretorio);
-        imagem.applyFilterRGB(1);
+        imagem.decodeRGB(1);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         imagem = new DecifraPPM(file_diretorio);
-        imagem.applyFilterRGB(2);
+        imagem.decodeRGB(2);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void MEjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MEjButtonActionPerformed
@@ -439,7 +437,7 @@ public class mainForm extends javax.swing.JFrame {
     private void NegativoRGBjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NegativoRGBjButtonActionPerformed
         // TODO add your handling code here:
         imagem = new DecifraPPM(file_diretorio);
-        imagem.applyFilterNegative();
+        imagem.decodeRGBNegative();
     }//GEN-LAST:event_NegativoRGBjButtonActionPerformed
 
     /**

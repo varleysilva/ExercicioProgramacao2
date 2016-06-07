@@ -64,7 +64,7 @@ public class DecifraPPM extends Decifra {
         frame.setVisible(true);
     }
 
-    public void applyFilterRGB(int color) {
+    public void decodeRGB(int color) {
         int y = 0;
         int x = 0;
         for (y = 0; y < this.getHeight(); y++) {
@@ -76,7 +76,7 @@ public class DecifraPPM extends Decifra {
         }
     }
     
-    public void applyFilterNegative() {
+    public void decodeRGBNegative() {
         for (int y = 0; y < this.getHeight(); y++) {
             for (int x = 0; x < this.getWidth(); x++) {
                 int[] rgb = new int[3];

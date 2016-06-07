@@ -186,26 +186,14 @@ abstract public class Decifra{
 
     public void saveImage(String name) {
         try {
-            /*
-            PrintWriter writer = new PrintWriter("image.ppm", "UTF-8");
-            writer.println(this.getMagic());
-            writer.println(this.getComment());
-            writer.println(this.getWidth() + " " + this.getHeight());
-            writer.println(this.getMaxGrey());
-            for (y = 0; y < this.getHeight(); y++) {
-                for (x = 0; x < this.getWidth(); x++) {
-                    System.out.println(this.getPicture().getRGB(y, x));
-                }
-            }
-            writer.close();
-             */
+            
             ImageIO.write(this.getPicture(), "PNG", new File(name));
         } catch (Throwable t) {
             t.printStackTrace(System.err);
         }
     }
     
-    public void applyFilterRGB(int color){
+    public void decodeRGB(int color){
         
     }
     public static String le_linha(FileInputStream arquivo) {

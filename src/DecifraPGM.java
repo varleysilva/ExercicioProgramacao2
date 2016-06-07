@@ -10,10 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,6 +27,14 @@ import javax.swing.JTextField;
  * @author varleysilva
  */
 public class DecifraPGM extends Decifra {
+
+    private static void setPixels_Sharpen(byte[] pixels_Sharpen) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void setS_imagem(BufferedImage imagem_pgm_sharpen) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     String file_arquivo;
 
     private int[][] pixels;
@@ -100,7 +110,6 @@ public class DecifraPGM extends Decifra {
     }
 
     public static void decodeNegativo(String file_diretorio) throws FileNotFoundException {
-//       String diretorio = file_diretorio = file_diretorio.substring(1);
         try {
             FileInputStream arquivo = new FileInputStream(file_diretorio);
             BufferedImage imagem_pgm = null, imagem_pgm_negativo = null;
@@ -147,13 +156,7 @@ public class DecifraPGM extends Decifra {
                         count++;
                     }
                 }
-
-//				while(count < (height*width)) {
-//					bb = (byte) arquivo.read();
-//					pixels[count] = bb;
-//					pixels_negativo[count] = (byte) (maxVal - bb); 
-//					count++;
-//				}				
+		
             } else {
                 System.out.println("Arquivo inválido");
             }
@@ -163,8 +166,6 @@ public class DecifraPGM extends Decifra {
             System.out.println("Total de Pixels = " + (width * height));
             System.out.println("Total de Pixels lidos = " + count);
             JFrame frame = new JFrame();
-            frame.getContentPane().setLayout(new FlowLayout());
-            frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm)));
             frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm_negativo)));
             frame.pack();
             frame.setVisible(true);
@@ -178,7 +179,7 @@ public class DecifraPGM extends Decifra {
 
     public static void decodeSharpen(String file_diretorio) throws FileNotFoundException, IOException {
 
-//		try {
+
         FileInputStream arquivo = new FileInputStream(file_diretorio);
         BufferedImage imagem_pgm = null, imagem_pgm_sharpen = null;
         System.out.println(file_diretorio + "diretorio");
@@ -212,68 +213,28 @@ public class DecifraPGM extends Decifra {
             maxVal = in.nextInt();
             in.close();
 
-            imagem_pgm = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+//            imagem_pgm = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+//            imagem_pgm_sharpen = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+//            byte[] pixels = ((DataBufferByte) imagem_pgm.getRaster().getDataBuffer()).getData();
+//            byte[] pixels_sharpen = ((DataBufferByte) imagem_pgm_sharpen.getRaster().getDataBuffer()).getData();
+            
             imagem_pgm_sharpen = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-            byte[] pixels = ((DataBufferByte) imagem_pgm.getRaster().getDataBuffer()).getData();
-            byte[] pixels_sharpen = ((DataBufferByte) imagem_pgm_sharpen.getRaster().getDataBuffer()).getData();
-            int size = (height * width);
-            int i = 0;
-            int parou = 0;
-            while (count < (height * width)) {
-                if (parou == 8) {
-                    parou = 0;
-                }
+            byte[] pixels_Sharpen = ((DataBufferByte) imagem_pgm_sharpen.getRaster().getDataBuffer()).getData();
+            
+            while (count < (height * width)){
                 bb = (byte) arquivo.read();
-                pixels[count] = bb;
-                for (i = parou; i < 9; i++) {
-                    if (i == 0) {
-                        pixels_sharpen[count] = (byte) (bb);
-                        count++;
-                        parou++;
-                        break;
-                    } else if (i == 1) {
-                        pixels_sharpen[count] = (byte) (1 - bb);
-                        count++;
-                        parou++;
-                        break;
-                    } else if (i == 2) {
-                        pixels_sharpen[count] = (byte) (bb);
-                        count++;
-                        parou++;
-                        break;
-                    } else if (i == 3) {
-                        pixels_sharpen[count] = (byte) (1 - bb);
-                        count++;
-                        parou++;
-                        break;
-                    } else if (i == 4) {
-                        pixels_sharpen[count] = (byte) (5 + bb);
-                        count++;
-                        parou++;
-                        break;
-                    } else if (i == 5) {
-                        pixels_sharpen[count] = (byte) (1 - bb);
-                        count++;
-                        parou++;
-                        break;
-                    } else if (i == 6) {
-                        pixels_sharpen[count] = (byte) (bb);
-                        count++;
-                        parou++;
-                        break;
-                    } else if (i == 7) {
-                        pixels_sharpen[count] = (byte) (1 - bb);
-                        count++;
-                        parou++;
-                        break;
-                    } else if (i == 8) {
-                        pixels_sharpen[count] = (byte) (bb);
-                        count++;
-                        parou++;
-                        break;
-                    }
-                }
+                pixels_Sharpen[count] = bb;
+                count++;
             }
+            System.out.println("teste");
+            Kernel kernel = new Kernel(3, 3, new float[] {0, -1, 0, -1, 5, -1, 0, 1, 0});
+            BufferedImageOp op = new ConvolveOp(kernel);
+            imagem_pgm_sharpen = op.filter(imagem_pgm_sharpen, null);
+            setPixels_Sharpen(pixels_Sharpen);
+            setS_imagem(imagem_pgm_sharpen);
+            arquivo.close();
+          
+    
         } else {
             System.out.println("Arquivo inválido");
         }
@@ -284,7 +245,7 @@ public class DecifraPGM extends Decifra {
         System.out.println("Total de Pixels lidos = " + count);
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new FlowLayout());
-        frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm)));
+        //frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm)));
         frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm_sharpen)));
         frame.pack();
         frame.setVisible(true);
@@ -451,6 +412,8 @@ public class DecifraPGM extends Decifra {
                 }
 
         JOptionPane.showMessageDialog(null, text);
+        JOptionPane.showMessageDialog(null, "Mensagem salva na pasta raiz do programa!");
+
 
     }
 }
