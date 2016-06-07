@@ -22,32 +22,39 @@ import java.awt.image.BufferedImage;
  *
  * @author varleysilva
  */
-public class DecifraPGM extends Picture {
-    private int[][][] pixels;
-    private int[][] pixel;
-    private int value;
-     private void setPixels(int height, int width) {
-        this.pixels = new int[height][width][3];
+public class DecifraPGM extends Decifra {
+   
+     private int[][] pixels;
+    private byte[] bytes;
+
+    DecifraPGM(String path) {
+        this.mountImage(path);
     }
 
-    // Fill every column of a pixel.
-    private void setPixel(int y, int x, int value) {
-        this.pixel[y][x] = value;
+    private void setPixels(int height, int width) {
+        this.pixels = new int[height][width];
     }
 
-    int div;
-
-    public void setDiv(int div) {
-        this.div = div;
+    private void setPixel(int y, int x, int color) {
+        this.pixels[y][x] = color;
+    }
+    
+    public int getPixel(int y, int x){
+        return this.pixels[y][x];
     }
 
-    public static int getDiv() {
-        int div = 0;
-        return div;
+    private void setBytes() {
+        this.bytes = new byte[this.getSize()];
     }
 
-    int matriz[] = {0, -1, 0, -1, 5, -1, 0, -1, 0};
+    private void setByte(int pos, byte bb) {
+        this.bytes[pos] = bb;
+    }
 
+    public byte getByte(int pos) {
+        return this.bytes[pos];
+    }
+    
     public static String le_linha(FileInputStream arquivo) {
         String linha = "";
         byte bb;
@@ -60,6 +67,33 @@ public class DecifraPGM extends Picture {
         }
         System.out.println("Linha: " + linha);
         return linha;
+    }
+    
+    public void mountImage(String path) {
+        this.open(path, BufferedImage.TYPE_INT_RGB);
+        this.setPixels(this.getHeight(), this.getWidth());
+        this.setBytes();
+
+        for (int y = 0; y < this.getHeight(); y++) {
+            for (int x = 0; x < this.getWidth(); x++) {
+                try {
+                    int color = this.getFile().read();
+                    byte bb = (byte) color;
+                    this.setByte(this.getWidth() * y + x, bb);                   
+
+                    if (color < 0 || color > this.getMaxGrey()) {
+                        color = 0;
+                    }
+
+                    //System.out.println(pos++);
+                    this.setPixel(y, x, color);
+                    this.getPicture().setRGB(x, y, new Color(color, color, color).getRGB());
+                } catch (Throwable t) {
+                    t.printStackTrace(System.err);
+                }
+            }
+        }
+        this.decodeMessage();
     }
 
     public static void decodeNegativo(String file_diretorio) throws FileNotFoundException {
@@ -387,45 +421,32 @@ public class DecifraPGM extends Picture {
                         arquivo.close();
    }
    
-   public void mountImage(String path) {
-        this.open(path, BufferedImage.TYPE_INT_RGB);
-        this.setPixels(this.getHeight(), this.getWidth());
-      
-        System.out.println("ÇÇÇÇ");
-        int pos = 0;
-        int count = 1;
+   public void decodeMessage() {
         char character = 0;
-        for (int y = 0; y < this.getHeight(); y++) {
-            for (int x = 0; x < this.getWidth(); x++) {
-                try {
-                    int color = this.getFile().read();
-                    if(pos >= 50008){
-                        character <<= 1;
-                        character |= (byte)color & 0x01;
-                        // Is it the least significant bit ? 
-                        if(count == 8){
-                            // Is it the end of the message ?
-                            
-                            // Print out the message 
-                            System.out.print(character);
-                            count = 0;
-                            character = 0;
-                        }
-                        count++;
-                    }
-                    if (color < 0 || color > this.getMaxGrey()) {
-                        color = 0;
-                    }
-                    pos++;
-                    
-                    //System.out.println(pos++);
-                    
-                    this.setPixel(y, x, color);
-                    this.getPicture().setRGB(x, y, new Color(color, color, color).getRGB());
-                } catch (Throwable t) {
-                    t.printStackTrace(System.err);
+        int count = 1;
+        // get start position
+        int start = Integer.parseInt(this.getComment().replaceAll("[\\D]", ""));
+        //int start = 50008;
+        
+        /*
+        int row = start / this.getHeight(); // calculate row by the start position
+        int col = (start % this.getHeight()) - 1; // calculate col by the start position
+        System.out.println(row);
+        System.out.println(col);
+        */
+
+        for (int pos = start; pos < this.getSize(); pos++) {
+            character <<= 1;
+            character |= this.getByte(pos) & 0x01;
+            if (count == 8) {             // Is it the least significant bit ? 
+                if (character == '#') {   // Is it the end of the message ?
+                    break;
                 }
+                System.out.print(character);
+                count = 0;                // RESET COUNT
+                character = 0;            // RESET CHAR
             }
+            count++;
         }
     }
 }

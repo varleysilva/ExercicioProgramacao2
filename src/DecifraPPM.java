@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
-public class DecifraPPM extends Picture {
+public class DecifraPPM extends Decifra {
 
     private int[][][] pixels;
 

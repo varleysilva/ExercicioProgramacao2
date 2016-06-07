@@ -414,9 +414,11 @@ public class mainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void MEjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MEjButtonActionPerformed
+       imagempgm = new DecifraPGM(file_diretorio);
+       imagempgm.decodeMessage();
        
-         imagempgm = new DecifraPGM();
-        imagempgm.mountImage(file_diretorio);
+       
+        
     }//GEN-LAST:event_MEjButtonActionPerformed
 
     private void SmoothjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SmoothjButton1ActionPerformed
