@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /*
@@ -24,6 +25,7 @@ import javax.swing.JTextField;
  * @author varleysilva
  */
 public class DecifraPGM extends Decifra {
+    String file_arquivo;
 
     private int[][] pixels;
     private byte[] bytes;
@@ -94,7 +96,7 @@ public class DecifraPGM extends Decifra {
                 }
             }
         }
-        this.decodeMessage();
+        this.decodeMessage(path);
     }
 
     public static void decodeNegativo(String file_diretorio) throws FileNotFoundException {
@@ -407,10 +409,11 @@ public class DecifraPGM extends Decifra {
         arquivo.close();
     }
 
-    public void decodeMessage() {
+    public void decodeMessage(String path) {
+        String text = "";
+        
         char character = 0;
         int count = 1;
-        // get start position
         int start = Integer.parseInt(this.getComment().replaceAll("[\\D]", ""));
 
         for (int pos = start; pos < this.getSize(); pos++) {
@@ -420,21 +423,34 @@ public class DecifraPGM extends Decifra {
                 if (character == '#') {   // Is it the end of the message ?
                     break;
                 }
-                System.out.print(character);
-                count = 0;                // RESET COUNT
-                character = 0;            // RESET CHAR
+
+                text += (char) character;
+                count = 0;
+                character = 0;
+
+                
             }
             count++;
-        
 
         }
+        String filename;
+        BufferedWriter writer = null;
+                try {
+                 writer = new BufferedWriter( new FileWriter(text));
+                    System.out.println(path.substring(0, path.lastIndexOf(".")));
+                    writer.write(text);
 
-        //String text = String.valueOf(character);
-        //System.out.println(text + "1");
+                } catch (IOException e) {
+                } finally {
+                    try {
+                        if (writer != null) {
+                            writer.close();
+                        }
+                    } catch (IOException e) {
+                    }
+                }
 
-        
-            }
-        }
+        JOptionPane.showMessageDialog(null, text);
 
-    
-
+    }
+}
