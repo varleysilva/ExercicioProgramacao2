@@ -208,5 +208,19 @@ abstract public class Decifra{
     public void applyFilterRGB(int color){
         
     }
+    public static String le_linha(FileInputStream arquivo) {
+		String linha = "";
+		byte bb;
+		try {
+			while ((bb = (byte) arquivo.read()) != '\n') {
+				linha += (char) bb;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Linha: " + linha);
+		return linha;
+	}
+        
    
 }

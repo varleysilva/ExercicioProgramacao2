@@ -415,7 +415,6 @@ public class mainForm extends javax.swing.JFrame {
 
     private void MEjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MEjButtonActionPerformed
        imagempgm = new DecifraPGM(file_diretorio);
-       imagempgm.decodeMessage(file_diretorio);
        
     }//GEN-LAST:event_MEjButtonActionPerformed
 

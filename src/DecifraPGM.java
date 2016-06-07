@@ -111,11 +111,11 @@ public class DecifraPGM extends Decifra {
             int count = 0;
             byte bb;
 
-            String linha = PGMreader.le_linha(arquivo);
+            String linha = Decifra.le_linha(arquivo);
             if ("P5".equals(linha)) {
-                linha = PGMreader.le_linha(arquivo);
+                linha = Decifra.le_linha(arquivo);
                 while (linha.startsWith("#")) {
-                    linha = PGMreader.le_linha(arquivo);
+                    linha = Decifra.le_linha(arquivo);
                 }
                 Scanner in = new Scanner(linha);
                 if (in.hasNext() && in.hasNextInt()) {
@@ -128,7 +128,7 @@ public class DecifraPGM extends Decifra {
                 } else {
                     System.out.println("Arquivo corrompido");
                 }
-                linha = PGMreader.le_linha(arquivo);
+                linha = Decifra.le_linha(arquivo);
                 in.close();
                 in = new Scanner(linha);
                 maxVal = in.nextInt();
