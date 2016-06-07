@@ -333,28 +333,28 @@ public class mainForm extends javax.swing.JFrame {
                     String ppm = ".ppm";
                     int i = 0;
                    
-//                          if(extensao == ppm){
-//                                AplicarEfeitoJPanel.removeAll();
-//                                AplicarEfeitoJPanel.repaint();
-//                                AplicarEfeitoJPanel.revalidate();
-//
-//                                    //adding panels
-//                                AplicarEfeitoJPanel.add(jPanel5);
-//                                AplicarEfeitoJPanel.repaint();
-//                                AplicarEfeitoJPanel.revalidate();
-//                                } else {
-//                                AplicarEfeitoJPanel.removeAll();
-//                                AplicarEfeitoJPanel.repaint();
-//                                AplicarEfeitoJPanel.revalidate();
-//
-//                                    //adding panels
-//                                AplicarEfeitoJPanel.add(jPanel4);
-//                                AplicarEfeitoJPanel.repaint();
-//                                AplicarEfeitoJPanel.revalidate();
-//                                
-//                          }
+                          if(extensao.equals(".ppm") ){
+                                AplicarEfeitoJPanel.removeAll();
+                                AplicarEfeitoJPanel.repaint();
+                                AplicarEfeitoJPanel.revalidate();
+
+                                    //adding panels
+                                AplicarEfeitoJPanel.add(jPanel5);
+                                AplicarEfeitoJPanel.repaint();
+                                AplicarEfeitoJPanel.revalidate();
+                                } else {
+                                AplicarEfeitoJPanel.removeAll();
+                                AplicarEfeitoJPanel.repaint();
+                                AplicarEfeitoJPanel.revalidate();
+
+                                    //adding panels
+                                AplicarEfeitoJPanel.add(jPanel4);
+                                AplicarEfeitoJPanel.repaint();
+                                AplicarEfeitoJPanel.revalidate();
+                                
+                          }
                       
-           
+         
                     
         }
       
@@ -417,8 +417,6 @@ public class mainForm extends javax.swing.JFrame {
        imagempgm = new DecifraPGM(file_diretorio);
        imagempgm.decodeMessage();
        
-       
-        
     }//GEN-LAST:event_MEjButtonActionPerformed
 
     private void SmoothjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SmoothjButton1ActionPerformed

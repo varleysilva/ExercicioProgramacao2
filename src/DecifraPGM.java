@@ -1,7 +1,5 @@
 
-import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import javax.swing.JTextField;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,8 +24,8 @@ import java.awt.image.BufferedImage;
  * @author varleysilva
  */
 public class DecifraPGM extends Decifra {
-   
-     private int[][] pixels;
+
+    private int[][] pixels;
     private byte[] bytes;
 
     DecifraPGM(String path) {
@@ -38,8 +39,8 @@ public class DecifraPGM extends Decifra {
     private void setPixel(int y, int x, int color) {
         this.pixels[y][x] = color;
     }
-    
-    public int getPixel(int y, int x){
+
+    public int getPixel(int y, int x) {
         return this.pixels[y][x];
     }
 
@@ -54,7 +55,7 @@ public class DecifraPGM extends Decifra {
     public byte getByte(int pos) {
         return this.bytes[pos];
     }
-    
+
     public static String le_linha(FileInputStream arquivo) {
         String linha = "";
         byte bb;
@@ -68,7 +69,7 @@ public class DecifraPGM extends Decifra {
         System.out.println("Linha: " + linha);
         return linha;
     }
-    
+
     public void mountImage(String path) {
         this.open(path, BufferedImage.TYPE_INT_RGB);
         this.setPixels(this.getHeight(), this.getWidth());
@@ -79,7 +80,7 @@ public class DecifraPGM extends Decifra {
                 try {
                     int color = this.getFile().read();
                     byte bb = (byte) color;
-                    this.setByte(this.getWidth() * y + x, bb);                   
+                    this.setByte(this.getWidth() * y + x, bb);
 
                     if (color < 0 || color > this.getMaxGrey()) {
                         color = 0;
@@ -109,7 +110,7 @@ public class DecifraPGM extends Decifra {
             byte bb;
 
             String linha = PGMreader.le_linha(arquivo);
-            if ("P5".equals(linha) || "P5".equals(linha)) {
+            if ("P5".equals(linha)) {
                 linha = PGMreader.le_linha(arquivo);
                 while (linha.startsWith("#")) {
                     linha = PGMreader.le_linha(arquivo);
@@ -173,267 +174,244 @@ public class DecifraPGM extends Decifra {
 
     }
 
-     public static void decodeSharpen(String file_diretorio) throws FileNotFoundException, IOException{
-  
+    public static void decodeSharpen(String file_diretorio) throws FileNotFoundException, IOException {
+
 //		try {
-		FileInputStream arquivo = new FileInputStream(file_diretorio);
-		BufferedImage imagem_pgm = null, imagem_pgm_sharpen = null;
-                System.out.println(file_diretorio  + "diretorio");
-                int width = 0;
-		int height = 0;
-		int maxVal = 0;
-		int count = 0;
-		byte bb;
-                int matriz[] = {0, -1, 0, -1, 5, -1, 0, -1, 0};
-		
-                String linha = DecifraPGM.le_linha(arquivo);
-		if("P5".equals(linha)) {
-                    linha = DecifraPGM.le_linha(arquivo);
-                    while (linha.startsWith("#")) {
-			linha = DecifraPGM.le_linha(arquivo);
+        FileInputStream arquivo = new FileInputStream(file_diretorio);
+        BufferedImage imagem_pgm = null, imagem_pgm_sharpen = null;
+        System.out.println(file_diretorio + "diretorio");
+        int width = 0;
+        int height = 0;
+        int maxVal = 0;
+        int count = 0;
+        byte bb;
+        int matriz[] = {0, -1, 0, -1, 5, -1, 0, -1, 0};
+
+        String linha = DecifraPGM.le_linha(arquivo);
+        if ("P5".equals(linha)) {
+            linha = DecifraPGM.le_linha(arquivo);
+            while (linha.startsWith("#")) {
+                linha = DecifraPGM.le_linha(arquivo);
+            }
+            Scanner in = new Scanner(linha);
+            if (in.hasNext() && in.hasNextInt()) {
+                width = in.nextInt();
+            } else {
+                System.out.println("Arquivo corrompido");
+            }
+            if (in.hasNext() && in.hasNextInt()) {
+                height = in.nextInt();
+            } else {
+                System.out.println("Arquivo corrompido");
+            }
+            linha = DecifraPGM.le_linha(arquivo);
+            in.close();
+            in = new Scanner(linha);
+            maxVal = in.nextInt();
+            in.close();
+
+            imagem_pgm = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+            imagem_pgm_sharpen = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+            byte[] pixels = ((DataBufferByte) imagem_pgm.getRaster().getDataBuffer()).getData();
+            byte[] pixels_sharpen = ((DataBufferByte) imagem_pgm_sharpen.getRaster().getDataBuffer()).getData();
+            int size = (height * width);
+            int i = 0;
+            int parou = 0;
+            while (count < (height * width)) {
+                if (parou == 8) {
+                    parou = 0;
+                }
+                bb = (byte) arquivo.read();
+                pixels[count] = bb;
+                for (i = parou; i < 9; i++) {
+                    if (i == 0) {
+                        pixels_sharpen[count] = (byte) (bb);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 1) {
+                        pixels_sharpen[count] = (byte) (1 - bb);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 2) {
+                        pixels_sharpen[count] = (byte) (bb);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 3) {
+                        pixels_sharpen[count] = (byte) (1 - bb);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 4) {
+                        pixels_sharpen[count] = (byte) (5 + bb);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 5) {
+                        pixels_sharpen[count] = (byte) (1 - bb);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 6) {
+                        pixels_sharpen[count] = (byte) (bb);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 7) {
+                        pixels_sharpen[count] = (byte) (1 - bb);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 8) {
+                        pixels_sharpen[count] = (byte) (bb);
+                        count++;
+                        parou++;
+                        break;
                     }
-		    Scanner in = new Scanner(linha); 
-		    if(in.hasNext() && in.hasNextInt())
-                    width = in.nextInt();
-		    else
-                    System.out.println("Arquivo corrompido");
-		    if(in.hasNext() && in.hasNextInt())
-		    	height = in.nextInt();
-		    else
-		    	System.out.println("Arquivo corrompido");
-			linha = DecifraPGM.le_linha(arquivo);
-			in.close();
-			in = new Scanner(linha);
-			maxVal = in.nextInt();
-			in.close();
-			
-			imagem_pgm = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-			imagem_pgm_sharpen = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-			byte [] pixels = ((DataBufferByte) imagem_pgm.getRaster().getDataBuffer()).getData();
-			byte [] pixels_sharpen = ((DataBufferByte) imagem_pgm_sharpen.getRaster().getDataBuffer()).getData();
-			int size = (height*width);
-                        int i = 0;
-                        int parou = 0;
-                    while(count < (height*width)) {
-                        if(parou == 8){
-                            parou = 0;
-                        }
-                            bb = (byte) arquivo.read();
-                            pixels[count] = bb;
-                            for(i = parou; i <  9; i++){
-                                if(i==0){
-                                    pixels_sharpen[count] = (byte) (bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==1){
-                                    pixels_sharpen[count] = (byte) (1 - bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==2){
-                                    pixels_sharpen[count] = (byte) (bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==3){
-                                    pixels_sharpen[count] = (byte) (1 - bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==4){
-                                    pixels_sharpen[count] = (byte) (5 + bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==5){
-                                    pixels_sharpen[count] = (byte) (1 - bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==6){
-                                    pixels_sharpen[count] = (byte) (bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i == 7){
-                                    pixels_sharpen[count] = (byte) (1- bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==8){
-                                    pixels_sharpen[count] = (byte) (bb); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                            }
-			}				
-			} 
-			else {
-                            System.out.println("Arquivo inválido");
-			}   
-			
-			System.out.println("Height=" + height);
-			System.out.println("Width=" + width);
-			System.out.println("Total de Pixels = " + (width * height));
-			System.out.println("Total de Pixels lidos = " + count);
-                        JFrame frame = new JFrame();
-			frame.getContentPane().setLayout(new FlowLayout());
-			frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm)));
-			frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm_sharpen)));
-			frame.pack();
-			frame.setVisible(true);
-                        arquivo.close();
-   }
-   
-   public static void decodeSmooth(String file_diretorio) throws FileNotFoundException, IOException{
-                FileInputStream arquivo = new FileInputStream(file_diretorio);
-		BufferedImage imagem_pgm = null, imagem_pgm_smooth = null;
-                System.out.println(file_diretorio  + "diretorio");
-                int width = 0;
-		int height = 0;
-		int maxVal = 0;
-		int count = 0;
-		byte bb;
-                int matriz[] = {0, -1, 0, -1, 5, -1, 0, -1, 0};
-		
-                String linha = DecifraPGM.le_linha(arquivo);
-		if("P5".equals(linha)) {
-                    linha = DecifraPGM.le_linha(arquivo);
-                    while (linha.startsWith("#")) {
-			linha = DecifraPGM.le_linha(arquivo);
+                }
+            }
+        } else {
+            System.out.println("Arquivo inválido");
+        }
+
+        System.out.println("Height=" + height);
+        System.out.println("Width=" + width);
+        System.out.println("Total de Pixels = " + (width * height));
+        System.out.println("Total de Pixels lidos = " + count);
+        JFrame frame = new JFrame();
+        frame.getContentPane().setLayout(new FlowLayout());
+        frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm)));
+        frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm_sharpen)));
+        frame.pack();
+        frame.setVisible(true);
+        arquivo.close();
+    }
+
+    public static void decodeSmooth(String file_diretorio) throws FileNotFoundException, IOException {
+        FileInputStream arquivo = new FileInputStream(file_diretorio);
+        BufferedImage imagem_pgm = null, imagem_pgm_smooth = null;
+        System.out.println(file_diretorio + "diretorio");
+        int width = 0;
+        int height = 0;
+        int maxVal = 0;
+        int count = 0;
+        byte bb;
+        int matriz[] = {0, -1, 0, -1, 5, -1, 0, -1, 0};
+
+        String linha = DecifraPGM.le_linha(arquivo);
+        if ("P5".equals(linha)) {
+            linha = DecifraPGM.le_linha(arquivo);
+            while (linha.startsWith("#")) {
+                linha = DecifraPGM.le_linha(arquivo);
+            }
+            Scanner in = new Scanner(linha);
+            if (in.hasNext() && in.hasNextInt()) {
+                width = in.nextInt();
+            } else {
+                System.out.println("Arquivo corrompido");
+            }
+            if (in.hasNext() && in.hasNextInt()) {
+                height = in.nextInt();
+            } else {
+                System.out.println("Arquivo corrompido");
+            }
+            linha = DecifraPGM.le_linha(arquivo);
+            in.close();
+            in = new Scanner(linha);
+            maxVal = in.nextInt();
+            in.close();
+
+            imagem_pgm = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+            imagem_pgm_smooth = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+            byte[] pixels = ((DataBufferByte) imagem_pgm.getRaster().getDataBuffer()).getData();
+            byte[] pixels_sharpen = ((DataBufferByte) imagem_pgm_smooth.getRaster().getDataBuffer()).getData();
+            int size = (height * width);
+            int i = 0;
+            int parou = 0;
+            while (count < (height * width)) {
+                if (parou == 8) {
+                    parou = 0;
+                }
+                bb = (byte) arquivo.read();
+                pixels[count] = bb;
+                for (i = parou; i < 9; i++) {
+                    if (i == 0) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 1) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 2) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 3) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 4) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 5) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 6) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 7) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 8) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
+                    } else if (i == 9) {
+                        pixels_sharpen[count] = (byte) (bb + maxVal);
+                        count++;
+                        parou++;
+                        break;
                     }
-		    Scanner in = new Scanner(linha); 
-		    if(in.hasNext() && in.hasNextInt())
-                    width = in.nextInt();
-		    else
-                    System.out.println("Arquivo corrompido");
-		    if(in.hasNext() && in.hasNextInt())
-		    	height = in.nextInt();
-		    else
-		    	System.out.println("Arquivo corrompido");
-			linha = DecifraPGM.le_linha(arquivo);
-			in.close();
-			in = new Scanner(linha);
-			maxVal = in.nextInt();
-			in.close();
-			
-			imagem_pgm = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-			imagem_pgm_smooth = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-			byte [] pixels = ((DataBufferByte) imagem_pgm.getRaster().getDataBuffer()).getData();
-			byte [] pixels_sharpen = ((DataBufferByte) imagem_pgm_smooth.getRaster().getDataBuffer()).getData();
-			int size = (height*width);
-                        int i = 0;
-                        int parou = 0;
-                    while(count < (height*width)) {
-                        if(parou == 8){
-                            parou = 0;
-                        }
-                            bb = (byte) arquivo.read();
-                            pixels[count] = bb;
-                            for(i = parou; i <  9; i++){
-                                if(i==0){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==1){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==2){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==3){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==4){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==5){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==6){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i == 7){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==8){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                                else if(i==9){
-                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
-                                    count++;
-                                    parou++;
-                                    break;
-                                }
-                            }
-			}				
-			} 
-			else {
-                            System.out.println("Arquivo inválido");
-			}   
-			
-			System.out.println("Height=" + height);
-			System.out.println("Width=" + width);
-			System.out.println("Total de Pixels = " + (width * height));
-			System.out.println("Total de Pixels lidos = " + count);
-                        JFrame frame = new JFrame();
-			frame.getContentPane().setLayout(new FlowLayout());
-			frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm)));
-			frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm_smooth)));
-			frame.pack();
-			frame.setVisible(true);
-                        arquivo.close();
-   }
-   
-   public void decodeMessage() {
+                }
+            }
+        } else {
+            System.out.println("Arquivo inválido");
+        }
+
+        System.out.println("Height=" + height);
+        System.out.println("Width=" + width);
+        System.out.println("Total de Pixels = " + (width * height));
+        System.out.println("Total de Pixels lidos = " + count);
+        JFrame frame = new JFrame();
+        frame.getContentPane().setLayout(new FlowLayout());
+        frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm)));
+        frame.getContentPane().add(new JLabel(new ImageIcon(imagem_pgm_smooth)));
+        frame.pack();
+        frame.setVisible(true);
+        arquivo.close();
+    }
+
+    public void decodeMessage() {
         char character = 0;
         int count = 1;
         // get start position
         int start = Integer.parseInt(this.getComment().replaceAll("[\\D]", ""));
-        //int start = 50008;
-        
-        /*
-        int row = start / this.getHeight(); // calculate row by the start position
-        int col = (start % this.getHeight()) - 1; // calculate col by the start position
-        System.out.println(row);
-        System.out.println(col);
-        */
 
         for (int pos = start; pos < this.getSize(); pos++) {
             character <<= 1;
@@ -447,6 +425,16 @@ public class DecifraPGM extends Decifra {
                 character = 0;            // RESET CHAR
             }
             count++;
+        
+
         }
-    }
-}
+
+        //String text = String.valueOf(character);
+        //System.out.println(text + "1");
+
+        
+            }
+        }
+
+    
+
