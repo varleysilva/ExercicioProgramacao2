@@ -1,5 +1,7 @@
 
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,6 +10,7 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 /*
@@ -19,7 +22,18 @@ import java.awt.image.BufferedImage;
  *
  * @author varleysilva
  */
-public class DecifraPGM {
+public class DecifraPGM extends Picture {
+    private int[][][] pixels;
+    private int[][] pixel;
+    private int value;
+     private void setPixels(int height, int width) {
+        this.pixels = new int[height][width][3];
+    }
+
+    // Fill every column of a pixel.
+    private void setPixel(int y, int x, int value) {
+        this.pixel[y][x] = value;
+    }
 
     int div;
 
@@ -180,7 +194,7 @@ public class DecifraPGM {
                                     break;
                                 }
                                 else if(i==1){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (1 - bb); 
                                     count++;
                                     parou++;
                                     break;
@@ -192,19 +206,19 @@ public class DecifraPGM {
                                     break;
                                 }
                                 else if(i==3){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (1 - bb); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==4){
-                                    pixels_sharpen[count] = (byte) (bb+5); 
+                                    pixels_sharpen[count] = (byte) (5 + bb); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==5){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (1 - bb); 
                                     count++;
                                     parou++;
                                     break;
@@ -216,7 +230,7 @@ public class DecifraPGM {
                                     break;
                                 }
                                 else if(i == 7){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (1- bb); 
                                     count++;
                                     parou++;
                                     break;
@@ -294,55 +308,61 @@ public class DecifraPGM {
                             pixels[count] = bb;
                             for(i = parou; i <  9; i++){
                                 if(i==0){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==1){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==2){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==3){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==4){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==5){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==6){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i == 7){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
                                 }
                                 else if(i==8){
-                                    pixels_sharpen[count] = (byte) (bb-1); 
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
+                                    count++;
+                                    parou++;
+                                    break;
+                                }
+                                else if(i==9){
+                                    pixels_sharpen[count] = (byte) (bb+maxVal); 
                                     count++;
                                     parou++;
                                     break;
@@ -366,4 +386,46 @@ public class DecifraPGM {
 			frame.setVisible(true);
                         arquivo.close();
    }
+   
+   public void mountImage(String path) {
+        this.open(path, BufferedImage.TYPE_INT_RGB);
+        this.setPixels(this.getHeight(), this.getWidth());
+      
+        System.out.println("ÇÇÇÇ");
+        int pos = 0;
+        int count = 1;
+        char character = 0;
+        for (int y = 0; y < this.getHeight(); y++) {
+            for (int x = 0; x < this.getWidth(); x++) {
+                try {
+                    int color = this.getFile().read();
+                    if(pos >= 50008){
+                        character <<= 1;
+                        character |= (byte)color & 0x01;
+                        // Is it the least significant bit ? 
+                        if(count == 8){
+                            // Is it the end of the message ?
+                            
+                            // Print out the message 
+                            System.out.print(character);
+                            count = 0;
+                            character = 0;
+                        }
+                        count++;
+                    }
+                    if (color < 0 || color > this.getMaxGrey()) {
+                        color = 0;
+                    }
+                    pos++;
+                    
+                    //System.out.println(pos++);
+                    
+                    this.setPixel(y, x, color);
+                    this.getPicture().setRGB(x, y, new Color(color, color, color).getRGB());
+                } catch (Throwable t) {
+                    t.printStackTrace(System.err);
+                }
+            }
+        }
+    }
 }

@@ -23,6 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class mainForm extends javax.swing.JFrame {
     private DecifraPPM imagem;
+    private DecifraPGM imagempgm;
     String extensao;
     private String file_diretorio = "";
     FileInputStream arquivo;
@@ -66,12 +67,14 @@ public class mainForm extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         NegativojButton = new javax.swing.JButton();
         SharpenjButton = new javax.swing.JButton();
-        SmoothjButton = new javax.swing.JButton();
+        MEjButton = new javax.swing.JButton();
+        SmoothjButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        NegativoRGBjButton = new javax.swing.JButton();
         ConcluirJPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -139,10 +142,17 @@ public class mainForm extends javax.swing.JFrame {
             }
         });
 
-        SmoothjButton.setText("Smooth");
-        SmoothjButton.addActionListener(new java.awt.event.ActionListener() {
+        MEjButton.setText("Mensagem Escondida");
+        MEjButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SmoothjButtonActionPerformed(evt);
+                MEjButtonActionPerformed(evt);
+            }
+        });
+
+        SmoothjButton1.setText("Smooth");
+        SmoothjButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SmoothjButton1ActionPerformed(evt);
             }
         });
 
@@ -151,22 +161,29 @@ public class mainForm extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SmoothjButton)
-                    .addComponent(SharpenjButton)
-                    .addComponent(NegativojButton))
-                .addContainerGap(90, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(NegativojButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SharpenjButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SmoothjButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(MEjButton)))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(23, 23, 23)
                 .addComponent(NegativojButton)
-                .addGap(47, 47, 47)
+                .addGap(34, 34, 34)
                 .addComponent(SharpenjButton)
-                .addGap(52, 52, 52)
-                .addComponent(SmoothjButton)
+                .addGap(41, 41, 41)
+                .addComponent(SmoothjButton1)
+                .addGap(38, 38, 38)
+                .addComponent(MEjButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -194,7 +211,14 @@ public class mainForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Filtro RGB");
+        jLabel1.setText("Filtros");
+
+        NegativoRGBjButton.setText("Negativo");
+        NegativoRGBjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NegativoRGBjButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -207,10 +231,10 @@ public class mainForm extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NegativoRGBjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 83, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -218,13 +242,15 @@ public class mainForm extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(NegativoRGBjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout AplicarEfeitoJPanelLayout = new javax.swing.GroupLayout(AplicarEfeitoJPanel);
@@ -252,11 +278,11 @@ public class mainForm extends javax.swing.JFrame {
         ConcluirJPanel.setLayout(ConcluirJPanelLayout);
         ConcluirJPanelLayout.setHorizontalGroup(
             ConcluirJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 583, Short.MAX_VALUE)
+            .addGap(0, 602, Short.MAX_VALUE)
         );
         ConcluirJPanelLayout.setVerticalGroup(
             ConcluirJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
+            .addGap(0, 358, Short.MAX_VALUE)
         );
 
         jPanel3.add(ConcluirJPanel, "card2");
@@ -302,37 +328,36 @@ public class mainForm extends javax.swing.JFrame {
             if (a == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = input.getSelectedFile();
                   file_diretorio = selectedFile.getPath();
-          
-        }
-            
-             extensao = file_diretorio.substring(file_diretorio.lastIndexOf("."), file_diretorio.length());
-         
+                    extensao = file_diretorio.substring(file_diretorio.lastIndexOf("."), file_diretorio.length());
+                    System.out.println(extensao);
+                    String ppm = ".ppm";
+                    int i = 0;
+                   
+//                          if(extensao == ppm){
+//                                AplicarEfeitoJPanel.removeAll();
+//                                AplicarEfeitoJPanel.repaint();
+//                                AplicarEfeitoJPanel.revalidate();
+//
+//                                    //adding panels
+//                                AplicarEfeitoJPanel.add(jPanel5);
+//                                AplicarEfeitoJPanel.repaint();
+//                                AplicarEfeitoJPanel.revalidate();
+//                                } else {
+//                                AplicarEfeitoJPanel.removeAll();
+//                                AplicarEfeitoJPanel.repaint();
+//                                AplicarEfeitoJPanel.revalidate();
+//
+//                                    //adding panels
+//                                AplicarEfeitoJPanel.add(jPanel4);
+//                                AplicarEfeitoJPanel.repaint();
+//                                AplicarEfeitoJPanel.revalidate();
+//                                
+//                          }
+                      
+           
                     
-        if(extensao == ".pgm"){
-        AplicarEfeitoJPanel.removeAll();
-        AplicarEfeitoJPanel.repaint();
-        AplicarEfeitoJPanel.revalidate();
-            
-            //adding panels
-        AplicarEfeitoJPanel.add(jPanel4);
-        AplicarEfeitoJPanel.repaint();
-        AplicarEfeitoJPanel.revalidate();
-        } else {
-        AplicarEfeitoJPanel.removeAll();
-        AplicarEfeitoJPanel.repaint();
-        AplicarEfeitoJPanel.revalidate();
-            
-            //adding panels
-        AplicarEfeitoJPanel.add(jPanel5);
-        AplicarEfeitoJPanel.repaint();
-        AplicarEfeitoJPanel.revalidate();
-               
-   }
-            
-            
-            
-            
-            
+        }
+      
     }//GEN-LAST:event_SelecionarImagemJButtonActionPerformed
 
     private void ConcluirJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConcluirJButtonActionPerformed
@@ -388,14 +413,27 @@ public class mainForm extends javax.swing.JFrame {
         imagem.applyFilterRGB(2);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void SmoothjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SmoothjButtonActionPerformed
+    private void MEjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MEjButtonActionPerformed
+       
+         imagempgm = new DecifraPGM();
+        imagempgm.mountImage(file_diretorio);
+    }//GEN-LAST:event_MEjButtonActionPerformed
+
+    private void SmoothjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SmoothjButton1ActionPerformed
+        // TODO add your handling code here:
         try {
             // TODO add your handling code here:
             DecifraPGM.decodeSmooth(file_diretorio);
         } catch (IOException ex) {
             Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_SmoothjButtonActionPerformed
+    }//GEN-LAST:event_SmoothjButton1ActionPerformed
+
+    private void NegativoRGBjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NegativoRGBjButtonActionPerformed
+        // TODO add your handling code here:
+        imagem = new DecifraPPM(file_diretorio);
+        imagem.applyFilterNegative();
+    }//GEN-LAST:event_NegativoRGBjButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -436,10 +474,12 @@ public class mainForm extends javax.swing.JFrame {
     private javax.swing.JPanel AplicarEfeitoJPanel;
     private javax.swing.JButton ConcluirJButton;
     private javax.swing.JPanel ConcluirJPanel;
+    private javax.swing.JButton MEjButton;
+    private javax.swing.JButton NegativoRGBjButton;
     private javax.swing.JButton NegativojButton;
     private javax.swing.JButton SelecionarImagemJButton;
     private javax.swing.JButton SharpenjButton;
-    private javax.swing.JButton SmoothjButton;
+    private javax.swing.JButton SmoothjButton1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

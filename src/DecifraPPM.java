@@ -6,15 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author kairon
- */
+
 public class DecifraPPM extends Picture {
 
     private int[][][] pixels;
@@ -83,5 +75,16 @@ public class DecifraPPM extends Picture {
             }
         }
     }
+    
+    public void applyFilterNegative() {
+        for (int y = 0; y < this.getHeight(); y++) {
+            for (int x = 0; x < this.getWidth(); x++) {
+                int[] rgb = new int[3];
+                System.arraycopy(this.pixels[y][x], 0, rgb, 0, rgb.length);
+                this.getPicture().setRGB(x, y, new Color(this.getMaxGrey()-rgb[0], this.getMaxGrey()-rgb[1], this.getMaxGrey()-rgb[2]).getRGB());
+            }
+        }
+    }
+    
     
 }
